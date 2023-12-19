@@ -15,9 +15,15 @@
 
 function calculateTotalSpentByCategory(transactions) {
   let hash = {};
-  let arr = [];
   for(let i=0; i<transactions.length;i++){
-    arr.push({category : transactions[i].category,totalspend:transactions[i].price })
+    if ( transactions[i].category in hash)
+    { hash[transactions[i].category] += transactions[i].price}
+    else
+    { hash[transactions[i].category] = transactions[i].price}
+  }
+  let arr = [];
+  for (let key in hash){
+    arr.push({category : key, totalSpent: hash[key]});
   }
   return arr;
 }
