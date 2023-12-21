@@ -10,8 +10,7 @@ function findLargestElement(numbers) {
     for (let number of numbers){
         if (number > max) {max = number}
     }
-    return max;
-    
+    return max;   
 }
 
 module.exports = findLargestElement;
