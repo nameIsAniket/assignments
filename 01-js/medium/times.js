@@ -9,5 +9,13 @@ There is no automated test for this one, this is more for you to understand time
 */
 
 function calculateTime(n) {
-    return 0.01;
+    const date = new Date();
+    const beforeSum = date.getTime();
+    sum = 0
+    for (let i=0; i < n; i++){ sum += 1}
+    const date2 = new Date();
+    const afterSum = date2.getTime()
+    return afterSum-beforeSum;
 }
+
+console.log('Time to calculate the sum in millisecond from 0 to number provided =',calculateTime(10000000));
