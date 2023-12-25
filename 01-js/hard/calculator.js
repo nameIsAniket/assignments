@@ -16,6 +16,39 @@
   Once you've implemented the logic, test your code by running
 */
 
-class Calculator {}
+class Calculator {
+  constructor(result) {this.result = }
+
+  add(value1,value2) {return value1 + value2;}
+  subtract(value1,value2){return value1-value2;}
+  multiply(){return value1*value2;}
+  divide(value1,value2){return value1/value2;}
+  clear(){this.result = 0}
+  getresult(){return this.result;}
+
+  checkValidExpression(str){
+    try{
+      eval(str);
+      return true;
+    }catch(error){
+      return false;
+    }
+  // const mathOperatorRegex = /^[\d()\s]*[+\-*/][\d()\s]*$/;
+  // return mathOperatorRegex.test(str);
+  //above expression does not evaluate the nested paranthesis
+  }
+
+  toRPN(str){
+    //using the reg opearion to get all the operands
+
+  }
+
+  calculate(str){
+    if (this.checkValidExpression(str)){
+      str = toRPN(str) //converting to reverse polish notation
+    }
+    return "Not a valid Expression"
+  }
+}
 
 module.exports = Calculator;
