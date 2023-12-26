@@ -17,38 +17,31 @@
 */
 
 class Calculator {
-  constructor(result) {this.result = }
+  constructor(result=0) {this.result = result;}
 
-  add(value1,value2) {return value1 + value2;}
-  subtract(value1,value2){return value1-value2;}
-  multiply(){return value1*value2;}
-  divide(value1,value2){return value1/value2;}
-  clear(){this.result = 0}
-  getresult(){return this.result;}
-
-  checkValidExpression(str){
-    try{
-      eval(str);
-      return true;
-    }catch(error){
-      return false;
-    }
-  // const mathOperatorRegex = /^[\d()\s]*[+\-*/][\d()\s]*$/;
-  // return mathOperatorRegex.test(str);
-  //above expression does not evaluate the nested paranthesis
+  add(value) {this.result += value;}
+  subtract(value){this.result -= value;}
+  multiply(value){this.result *= value;}
+  divide(value){
+    if (value ==0){throw new Error("Cannot divide by zero")}
+    else {this.result /= value} 
   }
+  clear(){this.result = 0}
+  getResult(){return this.result;}
 
-  toRPN(str){
-    //using the reg opearion to get all the operands
-
+  removespaces(str){
+    this.expression = /\s+/g;
+    return str.replace(this.expression,' ');
   }
 
   calculate(str){
-    if (this.checkValidExpression(str)){
-      str = toRPN(str) //converting to reverse polish notation
+    let str2 = this.removespaces(str);
+    try{
+      this.result = eval(str);
+    }catch(error){
+      console.error("string is not valid")
     }
-    return "Not a valid Expression"
+    if(this.result == Infinity){throw new Error("Infinity/Invalid Expression")}
   }
 }
-
 module.exports = Calculator;
