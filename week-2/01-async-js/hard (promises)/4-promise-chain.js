@@ -6,19 +6,34 @@
  */
 
 function wait1(t) {
-
-}
-
-function wait2(t) {
-
-}
-
-function wait3(t) {
-
-}
-
-function calculateTime(t1, t2, t3) {
-
-}
-
-module.exports = calculateTime;
+    return new Promise(function(resolve){
+        setTimeout(resolve,1000*t);
+    })
+  }
+  
+  function wait2(t) {
+    return new Promise(function(resolve){
+        setTimeout(resolve,1000*t);
+    })
+  }
+  
+  function wait3(t) {
+    return new Promise(function(resolve){
+        setTimeout(resolve,1000*t);
+    })
+  }
+  
+  
+  function calculateTime(t1, t2, t3) {
+    return new Promise(function(resolve){
+        let start = Date.now();
+        wait1(t1)
+        .then(() => wait2(t2))
+        .then(()=> wait3(t3))
+        .then(()=>{
+            resolve(Date.now()-start);
+        })
+    })
+  };
+  
+  module.exports = calculateTime;
