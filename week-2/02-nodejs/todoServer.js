@@ -45,5 +45,69 @@
   const app = express();
   
   app.use(bodyParser.json());
+
+  let todoItems = [];
+  let id = 0;
+
+  app.get('/todos',(req,res)=>{
+    res.status(200).json(todoItems)
+  })
   
+  app.get('/todo/:id',(req,res)=>{
+    let reqId = req.params.id;
+    for (let i=0; i<todoItems.length; i++){
+      if( todoItems[i].id === reqId){
+        res.status(200).send(todoItems[i]);
+      }
+    }
+    res.status(400).send('Id not found');
+  })
+
+  app.post('/todos',(req,res)=>{
+    let title = req.body.title;
+    let completed = req.body.completed;
+    let description = req.body.description;
+    if (id == 0){id = 1}
+    else {
+      let lastId = todoItems[todoItems.length - 1].id;
+      id = lastId + 1;
+    }
+
+    todoItems.push({
+      "id" : id,
+      'title' : title,
+      'completed' : completed,
+      'description' : description
+    })
+    res.status(201).send({'id':id})
+  })
+
+  app.put('/todo/:ids',(req,res)=>{
+    let reqId = req.params.ids;
+    let title = req.body.tile;
+    let status = req.body.status;
+    for (let i=0; i < todoItems.length; i++){
+      if(todoItems[i].id == reqId){
+        todoItems[i].title = title;
+        todoItems[i].completed = status;
+        res.status(200).send("Item was found and updated");
+      }
+    }
+    res.status(404).send("Item was not found")
+  })
+
+  app.delete('/todo/:id',(req,res)=>{
+    let id = req.params.id;
+    lengthBeforeFilter = todoItems.length;
+    todoItems = todoItems.filter(function(objects){objects.id !== id})
+    lengthAfterFilter = todoItems.length;
+    if(lengthBeforeFilter == lengthAfterFilter){
+      res.status(400).send("Id not found")
+    }
+    else{
+      res.status(200).send(id," deleted");
+    }
+
+  })
+
   module.exports = app;
