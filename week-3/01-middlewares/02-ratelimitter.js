@@ -11,19 +11,18 @@ const app = express();
 // You have been given a numberOfRequestsForUser object to start off with which
 // clears every one second
 
-let requestCount = [];
-let startTime = Date.now();
-
 function ratelimitter(req,res,next){
-  let userId = req.headers.user-id;
-  let endTime = Date.now();
-
-  if (userId in requestCount.userId)
-  requestCount++ ;
-  if (requestCount > 5){
-    res.status(404).send("Cannot send more than 5 req per second")
+  let userId = req.header['user-id'];
+  
+  if(numberOfRequestsForUser[userId]){
+    numberOfRequestsForUser[userId] += 1;
+    if (numberOfRequestsForUser[userId] > 5){
+      res.status(404).send("Cannot send more than 5 req in a second")
+    }
+    else{next()}
   }
   else{
+    numberOfRequestsForUser[userId] = 1;
     next();
   }
 }
